@@ -10,13 +10,11 @@ pipeline {
        stage ('build') {
            steps {
                  sh '''
-                 cd backend
-                 echo "build successfull"
-                 mvn clean package -DskipTests
-                  ''' 
-                 dir('backend') {                     
-+                   sh 'mvn clean package -DskipTests'
-+               }
+                 dir('backend') {
+                sh 'mvn clean package -DskipTests'
+}
+                 echo "build successful" 
+                 
           }
        }
          stage ("Test") {
