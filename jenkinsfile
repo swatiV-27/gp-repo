@@ -32,7 +32,7 @@ pipeline {
           } 
         }
        stage ('QualityGate'){
-           step {
+           steps {
             timeout(10)  {
              waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred'
                         }
