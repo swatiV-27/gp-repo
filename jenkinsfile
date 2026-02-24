@@ -17,16 +17,17 @@ pipeline {
        }
        stage ('test') {
          steps {
-           withSonarQubeEnv(installationName: 'sonar-cred' , credentialsId: 'sonar-cred') {
+          dir('backend') {  // enter the folder with pom.xml and compiled classes
+          withSonarQubeEnv(installationName: 'sonar-cred' , credentialsId: 'sonar-cred') {
     // some block
        
           sh '''
-           mvn clean vrify sonar:sonar -DskipTests  \
+           mvn clean sonar:sonar  \
            -Dsonar.projectKey=studentapp
            '''
             }
             echo "test successfully"
-            
+            }
           } 
         }
        
