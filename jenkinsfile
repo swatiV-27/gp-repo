@@ -12,6 +12,7 @@ pipeline {
                  sh '''
                  dir('backend') {
                 sh 'mvn clean package -DskipTests'
+                 '''
 }
                  echo "build successful" 
                  
