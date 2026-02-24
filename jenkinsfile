@@ -16,20 +16,14 @@ pipeline {
                   ''' 
           }
        }
-       stage ('test') {
-         steps {
-          
-         withSonarQubeEnv(installationName: 'sonarqube' , credentialsId: 'sonar-cred') {
-       
-          sh '''
-           cd backend
-           mvn clean sonar:sonar -DskipTests \
-           -Dsonar.projectKey=studentapp
-           '''
+         stage ("Test") {
+            steps {
+               withSonarQubeEnv(installationName: 'sonarqube' , credentialsId: 'sonar-cred') {
+                        sh '''
+                        cd backend
+                        mvn sonar:sonar -Dsonar.projectKey=studentapp '''
+                    }
             }
-            echo "test successfully"
-            
-          } 
         }
        stage ('QualityGate'){
            steps {
