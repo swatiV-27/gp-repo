@@ -17,9 +17,16 @@ pipeline {
        }
        stage ('test') {
          steps {
-             echo "test successfully"
-             
-         }
+           withSonarQubeEnv(installationName'sonarqube' , credentialsId: 'sonar-cred') {
+    // some block
+       
+          sh '''
+           mvn clean sonar:sonar
+           -Dsonar.projectKey=studentapp
+           echo "test successfully"
+             '''
+          } 
+        }
        }
        stage ('deploy') {
            steps {
