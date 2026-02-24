@@ -1,45 +1,46 @@
 pipeline {
     agent any 
-     stages {
-      stage ('git-pull') {
-          steps {
-            git branch: 'main', url: 'https://github.com/shubhamkalsait/EasyCRUD.git'
-            echo "git pull successful"
-          }
-      }
-       stage ('build') {
-           steps {
-                 sh '''
-                 dir('backend') {
-                sh 'mvn clean package -DskipTests'
-                 '''
-}
-                 echo "build successful" 
-                 
-          }
-       }
-         stage ("Test") {
+
+    stages {
+
+        stage('git-pull') {
             steps {
-                 dir('backend') {
-                   withSonarQubeEnv('sonar-cred') {
-                     sh '''mvn clean package sonar:sonar 
-                     -Dsonar.projectKey=studentapp
-                      '''
-                   }
+                git branch: 'main', url: 'https://github.com/shubhamkalsait/EasyCRUD.git'
+                echo "git pull successful"
             }
-          }
         }
-       stage ('QualityGate'){
-           steps {
-            timeout (time: 10, unit: 'MINUTES')  {
-             waitForQualityGate abortPipeline: true
-                        }
- }
-}
-       stage ('deploy') {
-           steps {
-               echo "deploy successfully"
-           }
-       }
- }
+
+        stage('build') {
+            steps {
+                dir('backend') {
+                    sh 'mvn clean package -DskipTests'
+                }
+                echo "build successful"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('backend') {
+                    withSonarQubeEnv('sonar-cred') {
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=studentapp'
+                    }
+                }
+            }
+        }
+
+        stage('QualityGate') {
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('deploy') {
+            steps {
+                echo "deploy successfully"
+            }
+        }
+    }
 }
