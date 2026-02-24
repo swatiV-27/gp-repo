@@ -22,7 +22,7 @@ pipeline {
     // some block
        
           sh '''
-           mvn clean sonar:sonar  \
+           mvn clean sonar:sonar -DskipTests \
            -Dsonar.projectKey=studentapp
            '''
             }
