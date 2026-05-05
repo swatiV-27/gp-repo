@@ -1,0 +1,1 @@
+"The Bird King" is a popular moral story for children where birds hold a competition to select a ruler. While the eagle, parakeet, and toucan boast of their strength and beauty, a clever little sparrow wins by hiding under the eagle's wing and flying higher at the last momen
